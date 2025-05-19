@@ -1,0 +1,18 @@
+workflows:
+  android-build:
+    name: Build Android APK
+    environment:
+      vars:
+        PACKAGE_NAME: "com.example.shipoassistantapp"
+      java: 17
+    scripts:
+      - name: إعداد Gradle
+        script: ./gradlew clean
+      - name: بناء APK
+        script: ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - legends.ahmed016@gmail.com 
