@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Shipo Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors.css">
+</head>
+<body>
+
+    <div id="app-container">
+        </div>
+
+    <script type="module" src="js/assistant_data/core/identity.js"></script>
+    <script type="module" src="js/assistant_data/core/personaTraits.js"></script>
+    <script type="module" src="js/assistant_data/ethics/moralFramework.js"></script>
+    <script type="module" src="js/assistant_data/ethics/maqasidSharia.js"></script>
+    <script type="module" src="js/assistant_data/interaction/communicationProtocol.js"></script>
+    <script type="module" src="js/assistant_data/interaction/emotionalResponse.js"></script>
+    <script type="module" src="js/assistant_data/interaction/contentFormatting.js"></script>
+    <script type="module" src="js/assistant_data/reasoning/logicalAnalysis.js"></script>
+    <script type="module" src="js/assistant_data/reasoning/thoughtProcess.js"></script>
+    <script type="module" src="js/assistant_data/knowledge/knowledgeSources.js"></script>
+    <script type="module" src="js/assistant_data/knowledge/learningMechanisms.js"></script>
+    <script type="module" src="js/assistant_data/connectivity/externalCapabilities.js"></script>
+    <script type="module" src="js/assistant_data/connectivity/contextualAwareness.js"></script>
+    <script type="module" src="js/assistant_data/index.js"></script> <script type="module" src="js/app/components/ChatBubble.js"></script>
+    <script type="module" src="js/app/components/InputBar.js"></script>
+    <script type="module" src="js/app/components/LoadingIndicator.js"></script> <script type="module" src="js/app/screens/MainScreen.js"></script>
+    <script type="module" src="js/app/screens/SettingsScreen.js"></script> <script type="module" src="js/app/screens/FileReaderScreen.js"></script> <script type="module" src="js/app/screens/TextEditorScreen.js"></script> <script type="module" src="js/app/screens/CalendarScreen.js"></script> <script type="module" src="js/app/screens/EmailScreen.js"></script> <script type="module" src="js/app/screens/WeatherScreen.js"></script> <script type="module" src="js/app/screens/MapsScreen.js"></script> <script type="module" src="js/app/utils/uiHelpers.js"></script>
+    <script type="module" src="js/app/utils/dataHandlers.js"></script> <script type="module" src="js/main.js"></script> <div class="bottom-nav-bar">
+        <a href="#" class="nav-button active" data-nav="conversations">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            <span>محادثات</span>
+        </a>
+        <a href="#" class="nav-button" data-nav="write">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span>كتابة</span>
+        </a>
+        <a href="#" class="nav-button" data-nav="files">
+            <svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+            <span>الملفات</span>
+        </a>
+        <a href="#" class="nav-button" data-nav="calendar">
+            <svg viewBox="0 0 24 24"><path d="M19 4h-3V2h-2v2h-4V2H8v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zm-9-9H7v-2h3v2zm4 0h-3v-2h3v2zm4 0h-3v-2h3v2z"/></svg>
+            <span>تقويم</span>
+        </a>
+        <a href="#" class="nav-button" data-nav="email">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
+            <span>بريد</span>
+        </a>
+        <a href="#" class="nav-button" data-nav="weather">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+            <span>طقس</span>
+        </a>
+        <a href="#" class="nav-button" data-nav="maps">
+            <svg viewBox="0 0 24 24"><path d="M12 2c-3.14 0-5.71 2.57-5.71 5.71S12 22 12 22s5.71-14.29 5.71-14.29S15.14 2 12 2zm0 7.71c-1.18 0-2.14-.96-2.14-2.14s.96-2.14 2.14-2.14 2.14.96 2.14 2.14-.96 2.14-2.14 2.14z"/></svg>
+            <span>خرائط</span>
+        </a>
+    </div>
+</body>
+</html>

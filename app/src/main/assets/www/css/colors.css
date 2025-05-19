@@ -1,0 +1,7 @@
+/* css/colors.css */
+:root {
+    --primary-golden: #FFD700; /* ذهبي */
+    --primary-white: #FFFFFF;  /* أبيض */
+    --primary-black: #000000;  /* أسود */
+    --background-dark: #121212; /* لون خلفية داكن للمحادثات، يمكن تعديله */
+}

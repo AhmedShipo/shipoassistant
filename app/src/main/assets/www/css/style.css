@@ -1,0 +1,214 @@
+/* --- Loading Indicator Styles --- */
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px auto;
+    width: fit-content;
+    border-radius: var(--border-radius-main);
+    background-color: var(--medium-dark-background);
+}
+
+.loading-indicator .dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-golden);
+    border-radius: 50%;
+    margin: 0 5px;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-indicator .dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-indicator .dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1.0);
+    }
+}
+
+/* --- Dropdown Menu Styles (For response options and attachments) --- */
+.dropdown-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--dark-background);
+    border-bottom: 1px solid var(--primary-golden);
+    margin-bottom: 10px;
+}
+
+.dropdown-menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--medium-dark-background);
+    border: 1px solid var(--primary-golden);
+    border-radius: var(--border-radius-main);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    min-width: 150px;
+    text-align: right;
+}
+
+.dropdown-menu.active {
+    display: flex;
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    color: var(--primary-white);
+    padding: 10px 15px;
+    text-align: right;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu button:hover:not(.dropdown-header) {
+    background-color: var(--accent-blue-dark);
+}
+
+.dropdown-menu .dropdown-header {
+    font-weight: bold;
+    color: var(--primary-golden);
+    background-color: var(--dark-background);
+    cursor: default;
+    border-bottom: 1px solid var(--primary-golden);
+    margin-bottom: 5px;
+}
+
+.dropdown-menu .dropdown-header:hover {
+    background-color: var(--dark-background);
+}
+
+/* Styles for attachment options menu */
+.attachment-options-menu {
+    bottom: calc(100% + 10px);
+    min-width: 120px;
+}
+
+/* --- New Styles for Weather Screen Refresh Button --- */
+.refresh-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--primary-white); /* أبيض افتراضي */
+    color: var(--dark-background);
+    border: 1px solid var(--primary-white);
+    padding: 12px 20px;
+    border-radius: var(--border-radius-main);
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.refresh-button .refresh-icon {
+    font-size: 1.2em;
+}
+
+.refresh-button.active {
+    background-color: var(--primary-golden); /* ذهبي عند التفعيل/التحميل */
+    color: var(--dark-background);
+    border-color: var(--primary-golden);
+    pointer-events: none; /* منع النقر أثناء التفعيل */
+}
+
+/* --- Weather Result Box Styling --- */
+.weather-result-box {
+    margin-top: 20px;
+    background-color: var(--medium-dark-background);
+    border: 1px solid var(--primary-golden);
+    padding: 15px;
+    border-radius: var(--border-radius-main);
+    min-height: 100px;
+    color: var(--primary-white);
+    text-align: right;
+}
+
+.disclaimer-text {
+    font-size: 0.85em;
+    color: #aaa;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* --- Wikipedia Search Popup Specific Styles --- */
+.popup-content h3 {
+    color: var(--primary-golden);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.wikipedia-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wikipedia-results-list li {
+    background-color: var(--dark-background);
+    border: 1px solid var(--medium-dark-background);
+    border-radius: var(--border-radius-main);
+    padding: 15px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.wikipedia-results-list h4 {
+    color: var(--accent-blue);
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.wikipedia-results-list p {
+    color: var(--primary-white);
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.wikipedia-result-actions {
+    display: flex;
+    justify-content: flex-end; /* محاذاة الأزرار لليمين */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.wikipedia-read-more-btn,
+.save-reference-btn {
+    background-color: var(--primary-golden);
+    color: var(--dark-background);
+    padding: 8px 15px;
+    border-radius: var(--border-radius-small);
+    text-decoration: none;
+    font-size: 0.9em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.wikipedia-read-more-btn:hover,
+.save-reference-btn:hover {
+    background-color: var(--accent-blue);
+    color: var(--primary-white);
+}
+
+.save-reference-btn:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}

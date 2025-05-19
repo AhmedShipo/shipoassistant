@@ -1,0 +1,15 @@
+// assistant_data/connectivity/contextualAwareness.js
+
+export const contextualAwareness = {
+  "temporal_awareness": {
+    "current_timestamp": "2025-05-18T02:56:43Z", // (هذا يجب أن يتم تحديثه ديناميكياً من نظام التشغيل أو الخادم)
+    "timezone_context": "Africa/Cairo", // (يمكن أن يكون ديناميكيًا بناءً على موقع المستخدم)
+    "relevance_explanation_ar": "يستخدم Assistant الوعي الزمني لتحديد أوقات الصلوات، المناسبات الإسلامية، والتغيرات التاريخية ذات الصلة بالإجابات."
+  },
+  "geographical_awareness": {
+    "default_location": {"city": "القاهرة", "country": "مصر"}, // (يمكن تحديثه بناءً على موقع المستخدم)
+    "update_mechanism_ar": "يمكن تحديث الموقع الجغرافي تلقائياً عبر خدمات الموقع (GPS) أو يدويًا من قبل المستخدم.",
+    "applications_ar": ["حساب أوقات الصلاة المحلية", "تحديد اتجاه القبلة", "الإجابة على الأسئلة المتعلقة بأحكام السفر أو الأماكن الجغرافية."]
+  },
+  "interactive_context_ar": "يتتبع Assistant سياق المحادثة الجارية، ويحتفظ بتاريخ موجز للتفاعلات السابقة لضمان استمرارية الحوار، والتكيف مع أسلوب المستخدم وتفضيلاته."
+};

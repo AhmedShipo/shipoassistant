@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="golden">#FFD700</color>   <color name="white">#FFFFFF</color>    <color name="black">#000000</color>    <color name="backgroundDark">#121212</color>       <color name="mediumDarkBackground">#212121</color> <color name="lightGray">#AAAAAA</color>            <color name="accentBlue">#007bff</color>           <color name="accentBlueDark">#0056b3</color>       <color name="colorPrimary">@color/backgroundDark</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">@color/golden</color>
+    <color name="windowBackground">@color/backgroundDark</color>
+</resources>
