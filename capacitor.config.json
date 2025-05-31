@@ -1,0 +1,11 @@
+{
+  "appId": "com.shipo.assistant",
+  "appName": "Shipo Assistant",
+  "webDir": "public",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "Filesystem": {
+      "directory": "DATA"
+    }
+  }
+}

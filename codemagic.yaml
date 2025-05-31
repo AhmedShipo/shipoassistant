@@ -1,0 +1,59 @@
+# codemagic.yaml
+workflows:
+  build-android: # تم استخدام "build-android" من النسخة الأولى لتكون أكثر وصفاً
+    name: "Shipo Assistant APK Build"
+    max_build_duration: 60 # تم تحديث المدة القصوى إلى 60 دقيقة من النسخة الثانية
+    environment:
+      # متغيرات بيئة (مثل PACKAGE_NAME)
+      vars:
+        PACKAGE_NAME: "com.shipo.assistant"
+      # إعدادات التوقيع إذا كنت تقوم ببناء إصدار Release
+      android_signing:
+        - keystore_reference # تأكد من اعداد هذا في CodeMagic UI
+      # تحديد إصدار Node.js و Android SDK المستخدم في بيئة البناء
+      node: 18 # يفضل تحديد إصدار ثابت بدلاً من 'latest' لتجنب مشاكل التوافق المفاجئة
+      android_sdk_image: 33 # أو إصدار SDK المستهدف لتطبيقك
+      # capacitor: latest # CodeMagic يعتمد على Node.js و CLI لتثبيت Capacitor، لا يوجد متغير بيئة مباشر لهذا.
+                         # بدلاً من ذلك، نضمن تثبيت Capacitor CLI عبر npm install.
+
+    # شروط تشغيل عملية البناء (مثلا عند الدفع الى فرع main)
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+
+    scripts:
+      - name: Install dependencies
+        script: |
+          # تثبيت Node.js dependencies المحددة في package.json
+          npm install
+          # تثبيت Capacitor CLI كأداة عامة إذا لم يتم تثبيته كـ devDependency
+          # npm install -g @capacitor/cli
+
+      - name: Add and Sync Android Platform
+        script: |
+          # هذا الامر سينشئ مجلد Android بما في ذلك AndroidManifest.xml وملفات Gradle
+          # اذا لم يكن موجودا، وسيقوم بمزامنة الويب مع الاندرويد واضافة الاذونات
+          npx cap add android
+          npx cap sync android
+
+      - name: Build Android APK
+        script: |
+          # نستخدم أمر بناء Capacitor مباشرة لأنه يقوم بكل الخطوات بما في ذلك cd android و ./gradlew
+          # --release لبناء نسخة الـ Release (تتطلب توقيع)
+          # --no-sync لتجنب إعادة المزامنة في هذه الخطوة بما أننا قمنا بها بالفعل
+          npx cap build android --release --no-sync
+          # إذا كنت بحاجة لـ debugging، استخدم: npx cap build android --no-sync
+
+    artifacts:
+      # تحديد مسار ملفات الـ APK النهائية التي سيتم حفظها بواسطة CodeMagic
+      - android/app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.aab # اذا كنت تخطط لرفعها الى Google Play
+    
+    # قسم النشر (اختياري) لرفع التطبيق الى متاجر او خدمات معينة
+    # publishing:
+      # google_play:
+        # service_account_key: encrypted_service_account_key
+        # track: alpha # او beta, production

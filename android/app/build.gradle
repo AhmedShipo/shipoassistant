@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android' // او 'kotlin-android'
+
+android {
+    namespace "com.shipo.assistant" // يجب ان يتطابق مع package في AndroidManifest.xml
+    compileSdk 34 // اصدار الـ SDK المستخدم للكومبايل (احدث اصدار متاح او المطلوب)
+
+    defaultConfig {
+        applicationId "com.shipo.assistant" // اسم حزمة التطبيق (يجب ان يتطابق مع package في AndroidManifest.xml)
+        minSdk 23 // الحد الادنى لاصدار الـ SDK المدعوم (اندرويد 6.0)
+        targetSdk 34 // اصدار الـ SDK الذي يستهدفه تطبيقك (احدث اصدار او الاكثر شيوعا)
+        versionCode 1 // رقم اصدار التطبيق (يزداد مع كل تحديث)
+        versionName "1.0" // اسم اصدار التطبيق (يعرض للمستخدم)
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false // تمكين تصغير الكود وتحسينه (يجب ضبطه على true للاصدار النهائي)
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // هنا يتم اضافة اعدادات التوقيع لاصدار APK/AAB
+            // signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17 // او احدث
+        targetCompatibility JavaVersion.VERSION_17 // او احدث
+    }
+
+    kotlinOptions {
+        jvmTarget = '17' // او احدث
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "com.google.android.material:material:1.11.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+
+    // Capacitor dependencies
+    implementation project(':capacitor-android')
+    implementation project(':capacitor-app')
+    implementation project(':capacitor-camera')
+    implementation project(':capacitor-filesystem')
+    implementation project(':capacitor-keyboard')
+    implementation project(':capacitor-splash-screen')
+    implementation project(':capacitor-status-bar')
+
+    // Cordova plugins (Capacitor will often add these automatically if you install Cordova plugins)
+    implementation "com.google.android.gms:play-services-auth:20.7.0" // for cordova-plugin-googleplus
+    implementation "org.apache.cordova:cordova-plugin-calendar:1.0.0" // مثال لإضافة cordova-plugin-calendar
+    implementation "org.apache.cordova:cordova-plugin-media-capture:4.0.4" // مثال لإضافة cordova-plugin-media-capture
+    implementation "org.apache.cordova:cordova-plugin-file:8.0.0" // مثال لإضافة cordova-plugin-file
+    // ... اي تبعيات اخرى تحتاجها اضافات Cordova التي تستخدمها
+} 
