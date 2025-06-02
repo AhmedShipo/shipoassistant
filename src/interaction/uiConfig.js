@@ -103,6 +103,7 @@ const uiConfig = {
                 document.body.appendChild(toast);
                 setTimeout(() => toast.remove(), 3000);
                 console.log(`تم تغيير الثيم إلى: ${themeName}`);
+                uiConfig.applyCurrentTheme(); // تحديث الواجهة بعد تغيير الثيم
             } else {
                 console.warn(`الثيم '${themeName}' غير موجود.`);
             }
@@ -170,6 +171,9 @@ const uiConfig = {
                 color: uiConfig.theming.getCurrentTheme().userBubbleText,
                 border: `2px solid ${uiConfig.theming.getCurrentTheme().userBubbleBorder}`,
                 borderRadius: "15px 15px 0 15px",
+                padding: "10px",
+                margin: "5px 0",
+                maxWidth: "70%",
             }),
             editButton: {
                 icon: unicodeIcons.edit,
@@ -187,8 +191,11 @@ const uiConfig = {
             copyButton: {
                 icon: unicodeIcons.copy,
                 action: (text) => {
-                    navigator.clipboard.writeText(text);
-                    console.log("تم نسخ النص إلى الحافظة");
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(() => console.log("تم نسخ النص إلى الحافظة"));
+                    } else {
+                        console.warn("Clipboard API غير مدعوم. يرجى استخدام طريقة أخرى.");
+                    }
                 },
             },
         },
@@ -198,6 +205,9 @@ const uiConfig = {
                 color: uiConfig.theming.getCurrentTheme().modelBubbleText,
                 border: `2px solid ${uiConfig.theming.getCurrentTheme().modelBubbleBorder}`,
                 borderRadius: "15px 15px 15px 0",
+                padding: "10px",
+                margin: "5px 0",
+                maxWidth: "70%",
             }),
             getModelNameStyle: (emotion) => {
                 const activeModelData = identity.getActiveModelData();
@@ -213,8 +223,11 @@ const uiConfig = {
             copyButton: {
                 icon: unicodeIcons.copy,
                 action: (text) => {
-                    navigator.clipboard.writeText(text);
-                    console.log("تم نسخ رد النموذج إلى الحافظة");
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(() => console.log("تم نسخ رد النموذج إلى الحافظة"));
+                    } else {
+                        console.warn("Clipboard API غير مدعوم. يرجى استخدام طريقة أخرى.");
+                    }
                 },
             },
         },
@@ -224,6 +237,13 @@ const uiConfig = {
             style: () => ({
                 backgroundColor: uiConfig.theming.getCurrentTheme().modelBubbleBg,
                 color: uiConfig.theming.getCurrentTheme().modelBubbleText,
+                border: `1px solid ${uiConfig.theming.getCurrentTheme().modelBubbleBorder}`,
+                borderRadius: "10px",
+                padding: "10px",
+                margin: "5px 0",
+                maxWidth: "50%",
+                position: "absolute",
+                zIndex: 100,
             }),
         },
     },
@@ -265,6 +285,10 @@ const uiConfig = {
                 color: uiConfig.theming.getCurrentTheme().buttonColor,
                 backgroundColor: "transparent",
                 border: `2px solid ${uiConfig.theming.getCurrentTheme().buttonColor}`,
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                fontSize: "20px",
             }),
         },
     },
@@ -299,7 +323,19 @@ const uiConfig = {
         const message = identity.getWelcomeMessage(userName);
         const welcomeMessageElement = document.getElementById("welcome-message");
         if (welcomeMessageElement) welcomeMessageElement.innerText = message;
-        else console.warn("العنصر #welcome-message غير موجود في DOM.");
+        else {
+            const chatContainer = document.getElementById(uiConfig.conversationArea.containerId);
+            if (chatContainer) {
+                const welcomeElement = document.createElement("div");
+                welcomeElement.id = "welcome-message";
+                welcomeElement.classList.add("message-bubble", "model-message");
+                welcomeElement.style.alignSelf = "flex-start";
+                Object.assign(welcomeElement.style, uiConfig.conversationArea.modelBubble.style());
+                welcomeElement.innerText = message;
+                chatContainer.appendChild(welcomeElement);
+                scrollHandler.scrollToBottom(chatContainer);
+            }
+        }
     },
 
     applyCurrentTheme: () => {
@@ -330,9 +366,7 @@ const uiConfig = {
                 if (btnConfig && btnConfig.id) {
                     const btnElement = document.getElementById(btnConfig.id);
                     if (btnElement) {
-                        btnElement.style.color = uiConfig.theming.getCurrentTheme().buttonColor;
-                        btnElement.style.backgroundColor = "transparent";
-                        btnElement.style.border = `2px solid ${uiConfig.theming.getCurrentTheme().buttonColor}`;
+                        Object.assign(btnElement.style, uiConfig.inputBox.buttons.getStyle());
                     }
                 }
             });
@@ -362,12 +396,25 @@ const uiConfig = {
         const headerElement = document.querySelector(".top-bar");
         if (headerElement) {
             transparencyHandler.setTransparency(headerElement, 0.5);
-            if (identity.activeGenderModel === "male") headerElement.style.backgroundColor = currentTheme.topBarBgMale;
-            else headerElement.style.backgroundColor = currentTheme.topBarBgFemale;
+            headerElement.style.backgroundColor = identity.activeGenderModel === "male" ? currentTheme.topBarBgMale : currentTheme.topBarBgFemale;
         }
 
         const bottomNavElement = document.querySelector(`#${uiConfig.bottomNav.containerId}`);
-        if (bottomNavElement) transparencyHandler.setTransparency(bottomNavElement, 0.5);
+        if (bottomNavElement) {
+            transparencyHandler.setTransparency(bottomNavElement, 0.5);
+            bottomNavElement.style.backgroundColor = identity.activeGenderModel === "male" ? currentTheme.topBarBgMale : currentTheme.topBarBgFemale;
+        }
+
+        const settingsPanel = document.getElementById("settings-panel");
+        if (settingsPanel) {
+            settingsPanel.style.backgroundColor = currentTheme.backgroundColor;
+            settingsPanel.style.color = currentTheme.textColor;
+            const settingsButtons = settingsPanel.querySelectorAll(".settings-button");
+            settingsButtons.forEach(btn => {
+                btn.style.color = currentTheme.buttonColor;
+                btn.style.border = `2px solid ${currentTheme.buttonColor}`;
+            });
+        }
 
         console.log(`تم تطبيق الثيم: ${activeAppTheme}`);
     },
@@ -388,12 +435,17 @@ const uiConfig = {
         const headerElement = document.querySelector(".top-bar");
         if (headerElement) {
             transparencyHandler.setTransparency(headerElement, 0.5);
-            if (identity.activeGenderModel === "male") headerElement.style.backgroundColor = currentTheme.topBarBgMale;
-            else headerElement.style.backgroundColor = currentTheme.topBarBgFemale;
+            headerElement.style.backgroundColor = identity.activeGenderModel === "male" ? currentTheme.topBarBgMale : currentTheme.topBarBgFemale;
         } else console.warn("العنصر .top-bar غير موجود في DOM.");
 
+        const bottomNavElement = document.querySelector(`#${uiConfig.bottomNav.containerId}`);
+        if (bottomNavElement) {
+            transparencyHandler.setTransparency(bottomNavElement, 0.5);
+            bottomNavElement.style.backgroundColor = identity.activeGenderModel === "male" ? currentTheme.topBarBgMale : currentTheme.topBarBgFemale;
+        }
+
         const toggleModelBtn = document.getElementById("toggle-model-button");
-        if (toggleModelBtn) toggleModelBtn.innerText = `تبديل لـ ${identity.activeGenderModel === "male" ? "Nori" : "Shipo"}`;
+        if (toggleModelBtn) toggleModelBtn.innerText = unicodeIcons[identity.activeGenderModel === "male" ? "shipo" : "nori"];
 
         const modelNameElements = document.querySelectorAll(".model-name");
         modelNameElements.forEach(modelNameElement => {
@@ -477,7 +529,7 @@ const uiConfig = {
 
             const modelNameSpan = document.createElement("span");
             modelNameSpan.classList.add("model-name");
-            modelNameSpan.innerText = `${responseObj.modelName}: `;
+            modelNameSpan.innerText = `${responseObj.modelName || identity.getActiveModelData().name}: `;
             const emotionToDisplay = responseObj.emotion || identity.currentEmotion || "neutral";
             const nameStyle = uiConfig.conversationArea.modelBubble.getModelNameStyle(emotionToDisplay);
             Object.assign(modelNameSpan.style, nameStyle);
@@ -539,47 +591,62 @@ const uiConfig = {
     },
 
     displayThemeSettings: () => {
-    const settingsContainer = document.querySelector("#settings-appearance");
-    if (settingsContainer) {
-        fileManager.getCurrentStoragePath().then(currentPath => {
-            settingsContainer.innerHTML = `
-                <h4>اختر الثيم:</h4>
-                ${Object.keys(uiConfig.theming.themes).map(theme => `
-                    <div class="theme-option" onmouseover="this.querySelector('.preview').style.display='block'" onmouseout="this.querySelector('.preview').style.display='none'">
-                        <input type="radio" name="theme" value="${theme}" ${activeAppTheme === theme ? "checked" : ""} onchange="uiConfig.theming.setTheme('${theme}')">
-                        <label>${uiConfig.theming.themes[theme].name}</label>
-                        <span class="preview" style="display:none; width:20px; height:20px; background:${theme === 'shipoTheme' ? 'linear-gradient(135deg, #1F3A5C, #0A1426)' : theme === 'noriTheme' ? 'linear-gradient(135deg, #5C1F3A, #260A14)' : theme === 'dark' ? '#333333' : '#E0E0E0'}; margin-left:10px;"></span>
-                    </div>
-                `).join('')}
-                <h4>إعدادات التخزين:</h4>
-                <p>المسار الحالي: ${currentPath}</p>
-                <button id="change-storage-path" style="color: ${uiConfig.theming.getCurrentTheme().buttonColor}; background-color: transparent; border: 2px solid ${uiConfig.theming.getCurrentTheme().buttonColor}; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
-                    ${unicodeIcons.openFolder} تغيير مسار التخزين
-                </button>
-            `;
-            window.uiConfig = uiConfig;
+        const settingsContainer = document.querySelector("#settings-appearance");
+        if (settingsContainer) {
+            fileManager.getCurrentStoragePath().then(currentPath => {
+                settingsContainer.innerHTML = `
+                    <h4>اختر الثيم:</h4>
+                    ${Object.keys(uiConfig.theming.themes).map(theme => `
+                        <div class="theme-option" onmouseover="this.querySelector('.preview').style.display='block'" onmouseout="this.querySelector('.preview').style.display='none'">
+                            <input type="radio" name="theme" value="${theme}" ${activeAppTheme === theme ? "checked" : ""} onchange="uiConfig.theming.setTheme('${theme}')">
+                            <label>${uiConfig.theming.themes[theme].name}</label>
+                            <span class="preview" style="display:none; width:20px; height:20px; background:${theme === 'shipoTheme' ? 'linear-gradient(135deg, #1F3A5C, #0A1426)' : theme === 'noriTheme' ? 'linear-gradient(135deg, #5C1F3A, #260A14)' : theme === 'dark' ? '#333333' : '#E0E0E0'}; margin-left:10px;"></span>
+                        </div>
+                    `).join('')}
+                    <h4>إعدادات التخزين:</h4>
+                    <p>المسار الحالي: ${currentPath}</p>
+                    <button id="change-storage-path" style="color: ${uiConfig.theming.getCurrentTheme().buttonColor}; background-color: transparent; border: 2px solid ${uiConfig.theming.getCurrentTheme().buttonColor}; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                        ${unicodeIcons.openFolder} تغيير مسار التخزين
+                    </button>
+                `;
+                window.uiConfig = uiConfig;
 
-            const changeStorageBtn = document.getElementById("change-storage-path");
-            if (changeStorageBtn) {
-                changeStorageBtn.addEventListener("click", async () => {
-                    try {
-                        const newPath = await fileManager.setStoragePath();
-                        if (newPath) {
-                            const toast = document.createElement("div");
-                            toast.className = "toast";
-                            toast.innerText = `تم تغيير مسار التخزين إلى: ${newPath}`;
-                            toast.style.cssText = `position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background: ${activeAppTheme === 'dark' || activeAppTheme === 'shipoTheme' ? '#333' : '#F8F8F8'}; color: ${activeAppTheme === 'dark' || activeAppTheme === 'shipoTheme' ? '#FFF' : '#000'}; padding: 10px; border-radius: 5px; z-index: 1000;`;
-                            document.body.appendChild(toast);
-                            setTimeout(() => toast.remove(), 3000);
-                            console.log(`تم تغيير مسار التخزين إلى: ${newPath}`);
-                            uiConfig.displayThemeSettings(); // تحديث الواجهة لعرض المسار الجديد
+                const changeStorageBtn = document.getElementById("change-storage-path");
+                if (changeStorageBtn) {
+                    changeStorageBtn.addEventListener("click", async () => {
+                        try {
+                            const newPath = await fileManager.setStoragePath(); // يستخدم Directory.Data الآن
+                            if (newPath) {
+                                const toast = document.createElement("div");
+                                toast.className = "toast";
+                                toast.innerText = `تم تغيير مسار التخزين إلى: ${newPath}`;
+                                toast.style.cssText = `position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background: ${activeAppTheme === 'dark' || activeAppTheme === 'shipoTheme' ? '#333' : '#F8F8F8'}; color: ${activeAppTheme === 'dark' || activeAppTheme === 'shipoTheme' ? '#FFF' : '#000'}; padding: 10px; border-radius: 5px; z-index: 1000;`;
+                                document.body.appendChild(toast);
+                                setTimeout(() => toast.remove(), 3000);
+                                console.log(`تم تغيير مسار التخزين إلى: ${newPath}`);
+                                uiConfig.displayThemeSettings(); // تحديث الواجهة لعرض المسار الجديد
+                            }
+                        } catch (error) {
+                            console.error("خطأ أثناء تغيير مسار التخزين:", error);
+                            alert("حدث خطأ أثناء تغيير مسار التخزين. يرجى المحاولة مرة أخرى.");
                         }
-                    } catch (error) {
-                        console.error("خطأ أثناء تغيير مسار التخزين:", error);
-                        alert("حدث خطأ أثناء تغيير مسار التخزين. يرجى المحاولة مرة أخرى.");
-                    }
-                });
-            }
+                    });
+                }
+            }).catch(error => {
+                console.error("خطأ أثناء جلب مسار التخزين الحالي:", error);
+                settingsContainer.innerHTML = `
+                    <h4>اختر الثيم:</h4>
+                    ${Object.keys(uiConfig.theming.themes).map(theme => `
+                        <div class="theme-option" onmouseover="this.querySelector('.preview').style.display='block'" onmouseout="this.querySelector('.preview').style.display='none'">
+                            <input type="radio" name="theme" value="${theme}" ${activeAppTheme === theme ? "checked" : ""} onchange="uiConfig.theming.setTheme('${theme}')">
+                            <label>${uiConfig.theming.themes[theme].name}</label>
+                            <span class="preview" style="display:none; width:20px; height:20px; background:${theme === 'shipoTheme' ? 'linear-gradient(135deg, #1F3A5C, #0A1426)' : theme === 'noriTheme' ? 'linear-gradient(135deg, #5C1F3A, #260A14)' : theme === 'dark' ? '#333333' : '#E0E0E0'}; margin-left:10px;"></span>
+                        </div>
+                    `).join('')}
+                    <h4>إعدادات التخزين:</h4>
+                    <p>خطأ في جلب المسار الحالي. حاول مرة أخرى.</p>
+                `;
+            });
         }
     },
 
@@ -664,29 +731,11 @@ const uiConfig = {
                     btnElement.textContent = btnConfig.icon;
                     btnElement.addEventListener("click", btnConfig.action);
                     btnElement.style.color = uiConfig.theming.getCurrentTheme().buttonColor;
-                } else if (!btnElement) console.warn(`زر صندوق الإدخال (#${btnConfig.id}) غير موجود في DOM.`);
+                } else if (!btnElement) {
+                    console.warn(`زر ${btnConfig.id} غير موجود في DOM.`);
+                }
             }
         });
-
-        uiConfig.bottomNav.items.forEach(item => {
-            const navItemElement = document.getElementById(item.id);
-            if (navItemElement) {
-                navItemElement.addEventListener("click", () => {
-                    console.log(`تم النقر على عنصر التنقل: ${item.label}`);
-                    uiConfig.bottomNav.items.forEach(nav => nav.active = (nav.id === item.id));
-                    const allNavItems = document.querySelectorAll(`#${uiConfig.bottomNav.containerId} .nav-item`);
-                    allNavItems.forEach(navItem => navItem.classList.toggle("active", navItem.id === item.id));
-                    uiConfig.applyCurrentTheme();
-                });
-                const iconElement = navItemElement.querySelector(".icon") || document.createElement("span");
-                iconElement.classList.add("icon");
-                iconElement.textContent = item.icon;
-                if (!navItemElement.querySelector(".icon")) navItemElement.prepend(iconElement);
-                navItemElement.style.color = item.active ? uiConfig.theming.getCurrentTheme().navItemActive : uiConfig.theming.getCurrentTheme().navItemInactive;
-            } else console.warn(`عنصر التنقل السفلي (#${item.id}) غير موجود في DOM.`);
-        });
-
-        uiConfig.displayThemeSettings();
     },
 };
 

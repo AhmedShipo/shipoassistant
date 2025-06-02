@@ -1,12 +1,10 @@
-// 📁 src/core/identity.js
-
 import SHIPO_DATA from './data/shipo_identity_engine.js';
 import NORI_DATA from './data/nori_identity_engine.js';
 
 let onEmotionChangeCallback = null;
 
 const identity = {
-    _activeGenderModel: localStorage.getItem("activeGenderModel") || "female", // 'male' for Shipo, 'female' for Nori
+    _activeGenderModel: localStorage.getItem("activeGenderModel") || (Math.random() > 0.5 ? "female" : "male"), // 'male' for Shipo, 'female' for Nori
 
     genderModelsData: {
         male: SHIPO_DATA,   // Corresponds to Shipo
@@ -114,7 +112,7 @@ const identity = {
 
     getDynamicAge: function(birthDate) {
         const dob = new Date(birthDate);
-        const today = new Date("2025-05-30T06:15:00+03:00");
+        const today = new Date();
         let years = today.getFullYear() - dob.getFullYear();
         let months = today.getMonth() - dob.getMonth();
         let days = today.getDate() - dob.getDate();
@@ -147,13 +145,21 @@ const identity = {
             this.currentEmotion = emotion;
             console.log(`تم تعيين العاطفة الحالية لـ ${this.getActiveModelData().name} إلى: ${emotion}`);
             if (onEmotionChangeCallback && typeof onEmotionChangeCallback === 'function') {
-                onEmotionChangeCallback(emotion);
+                try {
+                    onEmotionChangeCallback(emotion);
+                } catch (e) {
+                    console.error("خطأ أثناء استدعاء onEmotionChangeCallback:", e);
+                }
             }
         } else {
             console.warn(`العاطفة '${emotion}' غير معرفة في لوحة ألوان ${this.getActiveModelData().name}.`);
             this.currentEmotion = "neutral";
             if (onEmotionChangeCallback && typeof onEmotionChangeCallback === 'function') {
-                onEmotionChangeCallback("neutral");
+                try {
+                    onEmotionChangeCallback("neutral");
+                } catch (e) {
+                    console.error("خطأ أثناء استدعاء onEmotionChangeCallback لـ neutral:", e);
+                }
             }
         }
     },

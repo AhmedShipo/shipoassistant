@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shipo Assistant</title>
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="src/interaction/uiConfig.js" defer></script>
 </head>
 <body>
-    <!-- الشريط العلوي (Top Bar) -->
     <header class="top-bar">
         <div id="shipo-logo" class="logo">ShipoAssistant</div>
         <button id="toggle-model-button" class="top-bar-button">🔄</button>
@@ -16,10 +14,8 @@
         <button id="menu-button" class="top-bar-button">☰</button>
     </header>
 
-    <!-- منطقة المحادثة (Conversation Area) -->
     <main id="chat-messages" class="messages-container"></main>
 
-    <!-- صندوق الإدخال (Input Box) -->
     <div id="input-box" class="input-box">
         <textarea id="user-input" rows="2" placeholder="اكتب رسالتك هنا..."></textarea>
         <div class="input-buttons">
@@ -32,7 +28,6 @@
         </div>
     </div>
 
-    <!-- الشريط السفلي (Bottom Navigation) -->
     <nav id="bottom-nav" class="bottom-nav">
         <div id="nav-chat" class="nav-item active"><span class="icon">💬</span> محادثة</div>
         <div id="nav-read" class="nav-item"><span class="icon">📖</span> قراءة</div>
@@ -45,14 +40,12 @@
         <div id="nav-translate" class="nav-item"><span class="icon">🈸</span> ترجمة</div>
     </nav>
 
-    <!-- شريط الإعدادات الجانبي (Settings Panel) -->
     <aside id="settings-panel" class="settings-panel">
         <div class="settings-top-bar">
             <div class="logo">Shipo Assistant</div>
             <button class="close-button">X</button>
         </div>
         <div class="settings-content">
-            <!-- الحساب واللغة -->
             <div class="settings-section">
                 <span class="section-toggle">🧾 ➕</span>
                 <div class="section-content">
@@ -64,16 +57,10 @@
                     <p>اختر اللغة المفضلة من القائمة لتغيير واجهة التطبيق وردود النموذج.</p>
                 </div>
             </div>
-
-            <!-- المظهر -->
             <div class="settings-section">
                 <span class="section-toggle">🎨 ➕</span>
-                <div class="section-content" id="settings-appearance">
-                    <!-- سيتم ملئه بواسطة uiConfig.displayThemeSettings -->
-                </div>
+                <div class="section-content" id="settings-appearance"></div>
             </div>
-
-            <!-- إدارة الملفات -->
             <div class="settings-section">
                 <span class="section-toggle">📁 ➕</span>
                 <div class="section-content">
@@ -84,11 +71,8 @@
                         <option value="txt">TXT</option>
                         <option value="pdf">PDF</option>
                     </select>
-                    <!-- قائمة المجلدات هنا (سيتم ملئها لاحقًا) -->
                 </div>
             </div>
-
-            <!-- التكامل -->
             <div class="settings-section">
                 <span class="section-toggle">🛠️ ➕</span>
                 <div class="section-content">
@@ -100,8 +84,6 @@
                     <label><input type="checkbox"> 🎙️ ميكروفون</label>
                 </div>
             </div>
-
-            <!-- الذكاء الاصطناعي -->
             <div class="settings-section">
                 <span class="section-toggle">🤖 ➕</span>
                 <div class="section-content">
@@ -114,8 +96,6 @@
                     <button id="model-gender-toggle">تبديل النموذج (ذكر/أنثى)</button>
                 </div>
             </div>
-
-            <!-- القاموس واللغة -->
             <div class="settings-section">
                 <span class="section-toggle">📚 ➕</span>
                 <div class="section-content">
@@ -124,8 +104,6 @@
                     <button class="settings-button">استيراد مرجع</button>
                 </div>
             </div>
-
-            <!-- المساعدة -->
             <div class="settings-section">
                 <span class="section-toggle">💡 ➕</span>
                 <div class="section-content">
@@ -133,8 +111,6 @@
                     <p>اضغط على 'المساعدة' لعرض دليل الاستخدام والمعلومات عن النماذج.</p>
                 </div>
             </div>
-
-            <!-- إعدادات إضافية -->
             <div class="settings-section">
                 <span class="section-toggle">🧩 ➕</span>
                 <div class="section-content">
@@ -147,31 +123,111 @@
         </div>
     </aside>
 
-    <!-- رسالة الترحيب -->
-    <div id="welcome-message" class="welcome-message"></div>
+    <div id="help-interface" class="help-interface" style="display: none;">
+        <div class="help-content">
+            <div class="help-section">
+                <h3>📖 ملف المساعدة</h3>
+                <p>شروحات مصورة، نصائح، وأسئلة شائعة.</p>
+            </div>
+            <div class="help-section">
+                <h3>👤 ملفات تعريف النماذج</h3>
+                <div class="model-profile">
+                    <h4>نوري</h4>
+                    <p>العمر: 29 سنة و9 أشهر و22 يوم</p>
+                </div>
+                <div class="model-profile">
+                    <h4>شيبو</h4>
+                    <p>العمر: 39 سنة و9 أشهر و22 يوم</p>
+                </div>
+            </div>
+            <div class="help-buttons">
+                <button class="help-button">⬅️ رجوع</button>
+                <button class="help-button">📋 نسخ</button>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        // تهيئة uiConfig عند تحميل الصفحة
-        document.addEventListener("DOMContentLoaded", () => {
-            import("./src/interaction/uiConfig.js").then(({ default: uiConfig }) => {
-                uiConfig.initialize();
-            });
+    <div id="file-reader" class="file-reader" style="display: none;">
+        <div class="file-content">
+            <div class="file-text" dir="auto"></div>
+            <div class="file-buttons">
+                <button class="file-button">➕</button>
+                <button class="file-button">➖</button>
+                <button class="file-button">📋</button>
+                <button class="file-button">💾</button>
+                <button class="file-button">🗑️</button>
+                <button class="file-button">⬅️</button>
+            </div>
+        </div>
+    </div>
 
-            // سكربت للتحكم في الطي (➕/➖) في الإعدادات
-            const sectionToggles = document.querySelectorAll(".section-toggle");
-            sectionToggles.forEach(toggle => {
-                toggle.addEventListener("click", () => {
-                    const sectionContent = toggle.nextElementSibling;
-                    const isOpen = sectionContent.style.display === "block";
+    <div id="text-editor" class="text-editor" style="display: none;">
+        <textarea class="editor-textarea" dir="auto"></textarea>
+        <div class="editor-buttons">
+            <button class="editor-button">💾 حفظ</button>
+            <button class="editor-button">💾 حفظ باسم</button>
+            <button class="editor-button">📂 فتح</button>
+            <button class="editor-button">⬅️ رجوع</button>
+        </div>
+    </div>
 
-                    // تبديل الأيقونة بين ➕ و➖
-                    toggle.innerHTML = toggle.innerHTML.replace(isOpen ? "➖" : "➕", isOpen ? "➕" : "➖");
+    <div id="calendar-interface" class="calendar-interface" style="display: none;">
+        <div class="calendar-content"></div>
+        <div class="calendar-buttons">
+            <button class="calendar-button">🆕</button>
+            <button class="calendar-button">🗑️</button>
+            <button class="calendar-button">⬅️</button>
+        </div>
+    </div>
 
-                    // تبديل عرض المحتوى
-                    sectionContent.style.display = isOpen ? "none" : "block";
-                });
-            });
-        });
-    </script>
+    <div id="email-interface" class="email-interface" style="display: none;">
+        <div class="email-content"></div>
+        <div class="email-buttons">
+            <button class="email-button">✍️</button>
+            <button class="email-button">📖</button>
+            <button class="email-button">🔁</button>
+            <button class="email-button">⬅️</button>
+        </div>
+    </div>
+
+    <div id="weather-interface" class="weather-interface" style="display: none;">
+        <div class="weather-header">
+            <button class="weather-update-button">🔄</button>
+        </div>
+        <div class="weather-content"></div>
+    </div>
+
+    <div id="maps-interface" class="maps-interface" style="display: none;">
+        <div class="maps-content"></div>
+        <div class="maps-buttons">
+            <button class="maps-button">بحث</button>
+            <button class="maps-button">تحديد موقع</button>
+            <button class="maps-button">⬅️</button>
+        </div>
+    </div>
+
+    <div id="references-interface" class="references-interface" style="display: none;">
+        <div class="references-content"></div>
+        <div class="references-buttons">
+            <button class="references-button">➕</button>
+            <button class="references-button">🗑️</button>
+            <button class="references-button">⬅️</button>
+        </div>
+    </div>
+
+    <div id="translation-interface" class="translation-interface" style="display: none;">
+        <div class="translation-content"></div>
+        <div class="translation-buttons">
+            <button class="translation-button">↔</button>
+            <button class="translation-button">ترجم الآن</button>
+            <button class="translation-button">⬅️</button>
+        </div>
+    </div>
+
+    <script src="uiConfig.js"></script>
+    <script src="core_logic/thoughtProcess.js"></script>
+    <script src="externalCapabilities.js"></script>
+    <script src="memory/conversationHistory.js"></script>
+    <script src="analytics.js"></script>
 </body>
 </html>

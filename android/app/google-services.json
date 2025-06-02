@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1084268936666",
+    "project_id": "shipo-ai-2",
+    "storage_bucket": "shipo-ai-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084268936666:android:a37618371f338b6e2154e3",
+        "android_client_info": {
+          "package_name": "com.shipoai.code"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaioGMmCZf7ovqqz4q8_TLJdHj70XnCq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

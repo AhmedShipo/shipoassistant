@@ -1,1 +1,27 @@
- 
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ألوان عامة -->
+    <color name="colorPrimary">#0F1C33</color> <!-- لون خلفية ثيم شيبو -->
+    <color name="colorPrimaryDark">#330F1C</color> <!-- لون خلفية ثيم نوري -->
+    <color name="colorAccent">#4CAF50</color> <!-- لون الحدود والأزرار في ثيم شيبو -->
+    <color name="colorAccentNori">#FF5722</color> <!-- لون الحدود والأزرار في ثيم نوري -->
+    <color name="textColorLight">#E0E0E0</color>
+    <color name="textColorDark">#000000</color>
+    <color name="backgroundDark">#222222</color>
+    <color name="backgroundLight">#F8F8F8</color>
+    <color name="gold">#FFD700</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- ألوان الفقاعات -->
+    <color name="userBubbleBgShipo">#1F3A5C</color>
+    <color name="userBubbleBgNori">#5C1F3A</color>
+    <color name="modelBubbleBgShipo">#0A1426</color>
+    <color name="modelBubbleBgNori">#260A14</color>
+    <color name="bubbleBorderShipo">#4CAF50</color>
+    <color name="bubbleBorderNori">#FF5722</color>
+
+    <!-- ألوان الشريط العلوي -->
+    <color name="topBarBgMale">#000080</color> <!-- أزرق غامق للذكور -->
+    <color name="topBarBgFemale">#8B0000</color> <!-- أحمر غامق للإناث -->
+</resources>

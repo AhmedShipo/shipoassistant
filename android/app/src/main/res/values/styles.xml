@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ثيم عام للتطبيق -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- ثيم داكن -->
+    <style name="AppTheme.Dark" parent="AppTheme">
+        <item name="android:windowBackground">@color/backgroundDark</item>
+        <item name="android:textColor">@color/textColorLight</color>
+        <item name="colorAccent">@color/gold</item>
+    </style>
+
+    <!-- ثيم شيبو -->
+    <style name="AppTheme.Shipo" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- ثيم نوري -->
+    <style name="AppTheme.Nori" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="colorAccent">@color/colorAccentNori</item>
+    </style>
+
+    <!-- أنماط الفقاعات -->
+    <style name="UserBubble">
+        <item name="android:background">@drawable/user_bubble_background</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:maxWidth">70%</item>
+    </style>
+
+    <style name="ModelBubble">
+        <item name="android:background">@drawable/model_bubble_background</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:maxWidth">70%</item>
+    </style>
+
+    <!-- أنماط الأزرار -->
+    <style name="ButtonStyle">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/gold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+</resources>

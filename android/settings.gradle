@@ -1,0 +1,33 @@
+// settings.gradle
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // JCenter is deprecated, but sometimes needed for older plugins.
+        // If you encounter "Could not find" errors, you might need to add it:
+        // jcenter()
+    }
+}
+rootProject.name = "Shipo Assistant" // يمكنك تغيير هذا لاسم مشروعك إذا أردت
+
+include ':app'
+include ':capacitor-android'
+project(':capacitor-android').projectDir = new File('./capacitor-android')
+
+// هذه الأسطر ضرورية لمكونات Cordova الإضافية
+// تأكد من وجود مجلد 'capacitor-cordova-android-plugins' في نفس مستوى هذا الملف
+include ':capacitor-cordova-android-plugins'
+project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins')
+
+// إذا كان لديك أي مكونات Cordova إضافية أخرى غير تلك التي يديرها Capacitor مباشرة،
+// فستحتاج إلى إضافتها هنا يدويًا أيضًا. على سبيل المثال:
+// include ':cordova-plugin-calendar'
+// project(':cordova-plugin-calendar').projectDir = new File('../node_modules/cordova-plugin-calendar/src/android')

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- تطبيقات عامة -->
+    <string name="app_name">Shipo Assistant</string>
+    <string name="welcome_message">أهلاً بك يا %1$s! أنا %2$s، هنا لخدمتك بكل حب! ❤️</string>
+    <string name="toggle_model">تبديل إلى %1$s</string>
+    <string name="new_conversation">محادثة جديدة</string>
+    <string name="menu">قائمة</string>
+
+    <!-- أزرار الإدخال -->
+    <string name="send">إرسال</string>
+    <string name="mic">ميكروفون</string>
+    <string name="think_mode">وضع التفكير</string>
+    <string name="deep_search">بحث عميق</string>
+    <string name="attach">إرفاق</string>
+    <string name="search">بحث</string>
+
+    <!-- رسائل الواجهة -->
+    <string name="theme_applied">تم تطبيق ثيم %1$s!</string>
+    <string name="storage_changed">تم تغيير مسار التخزين إلى: %1$s</string>
+    <string name="edit_message">عدّل رسالتك</string>
+    <string name="copy">نسخ</string>
+    <string name="like">أعجبني</string>
+    <string name="dislike">لم يعجبني</string>
+
+    <!-- نصوص الثيمات -->
+    <string name="theme_dark">داكن</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_shipo">ثيم شيبو</string>
+    <string name="theme_nori">ثيم نوري</string>
+
+    <!-- تعليمات عامة -->
+    <string name="no_file_selected">لم يتم اختيار أي ملف.</string>
+    <string name="file_attached">تم إرفاق الملف: %1$s بنجاح. جاري معالجته...</string>
+    <string name="error_attachment">حدث خطأ أثناء إرفاق الملف. يرجى المحاولة مرة أخرى.</string>
+</resources>

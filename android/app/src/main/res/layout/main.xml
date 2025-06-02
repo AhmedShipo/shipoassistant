@@ -1,11 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:orientation="vertical"
+    android:background="@color/backgroundLight"
+    android:padding="10dp">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!-- الشريط العلوي -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- منطقة الرسائل -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/welcome_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome_message"
+                android:textColor="@color/textColorLight"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:background="@drawable/model_bubble_background" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- حاوية الإدخال -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@color/colorPrimaryDark">
+
+        <EditText
+            android:id="@+id/user_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="اكتب رسالتك..."
+            android:textColor="@color/textColorLight"
+            android:textColorHint="@color/textColorLight"
+            android:padding="10dp"
+            android:layout_marginEnd="10dp"
+            android:imeOptions="actionSend"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:minHeight="40dp"
+            android:scrollbars="vertical" />
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/send"
+            android:textSize="20sp"
+            style="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/mic_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/mic"
+            android:textSize="20sp"
+            style="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/attach_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/attach"
+            android:textSize="20sp"
+            style="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/think_mode_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/think_mode"
+            android:textSize="20sp"
+            style="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/deep_search_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/deep_search"
+            android:textSize="20sp"
+            style="@style/ButtonStyle" />
+    </LinearLayout>
 
 </LinearLayout>

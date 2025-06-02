@@ -1,15 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@android:color/white">
+    android:background="@color/backgroundLight"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- الشريط العلوي -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <!-- رسالة الترحيب -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/input_container"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/welcome_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_message"
+            android:textColor="@color/textColorLight"
+            android:textSize="16sp"
+            android:padding="10dp"
+            style="@style/ModelBubble" />
+    </ScrollView>
+
+    <!-- حاوية الإدخال -->
+    <LinearLayout
+        android:id="@+id/input_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="مرحبًا بك في Shipo Assistant"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@color/colorPrimaryDark">
+
+        <!-- حقل الإدخال -->
+        <EditText
+            android:id="@+id/user_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="اكتب رسالتك..."
+            android:textColor="@color/textColorLight"
+            android:textColorHint="@color/textColorLight"
+            android:padding="10dp"
+            android:layout_marginEnd="10dp"
+            android:imeOptions="actionSend"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:minHeight="40dp"
+            android:scrollbars="vertical" />
+
+        <!-- زر الإرسال -->
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/send"
+            android:textSize="20sp"
+            style="@style/ButtonStyle" />
+    </LinearLayout>
+
+</RelativeLayout>
