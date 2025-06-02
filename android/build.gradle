@@ -15,15 +15,13 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        flatDir {
-            dirs 'libs'
-        }
-    }
-}
+// ****** التعديل هنا: حذف كتلة allprojects بالكامل ******
+// allprojects {
+//     flatDir {
+//         dirs 'libs'
+//     }
+// }
+// ******************************************************
 
 tasks.configureEach { task ->
     if (task.name.contains('lint') && !System.getenv().containsKey('CI')) {
